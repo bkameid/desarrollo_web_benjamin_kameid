@@ -42,10 +42,42 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.ave-dia {
-    margin-left: 10%;
-    margin-right: 10%;
-    height: 1000px;
+main {
+    margin-inline: 20%;   
+    margin-bottom: 100px;
+}
 
-    background-color: red;
+.ave-dia {
+    display: flex;
+}
+
+.ave-dia p {
+    margin-inline: 10%;
+
+    text-align: justify;
+}
+
+footer {
+    background-color: #444;
+    height: 120px;
+    margin: 0;
+    color: aliceblue;
+
+    display: flex;
+    flex-shrink: 0;
+    container-type: size;
+}
+
+footer img {
+    object-fit: contain;
+
+    padding-top: 6px;
+    margin-left: 30px;
+    height: 90%;
+}
+
+.credits {
+    align-items: center;
+    padding-top: 20cqh;
+    margin-left: 20px
 }
