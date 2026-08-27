@@ -66,18 +66,20 @@ footer {
     display: flex;
     flex-shrink: 0;
     container-type: size;
+
+
 }
 
 footer img {
     object-fit: contain;
 
     padding-top: 6px;
-    margin-left: 30px;
+    margin-inline: 30px;
     height: 90%;
 }
 
 .credits {
     align-items: center;
     padding-top: 20cqh;
-    margin-left: 20px
+    margin-left: auto;
 }
