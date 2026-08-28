@@ -51,6 +51,10 @@ main {
     display: flex;
 }
 
+.ave-dia img {
+    object-fit: contain;
+}
+
 .ave-dia p {
     margin-inline: 10%;
 
