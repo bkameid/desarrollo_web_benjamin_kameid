@@ -7,7 +7,10 @@ body {
     text-align: center;
     align-content: center;
     height: 70px;
-}
+    border-bottom: #78d261;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+}  
 
 .nav-container {      
     display: inline-block;
@@ -25,49 +28,61 @@ body {
     font-weight: 1000;
 }
 
-.center-img {
-    width:100vw;
-    height: 400px;
-    position: relative;
-    border-color: #78d261;
-    border-top-width: 5px;
-    border-top-style: solid;
-    border-bottom-width: 6px; /* Intentar reemplazar con fade out*/
-    border-bottom-style: solid;
-}
 
-.center-img img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.logo {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
 main {
-    margin-inline: 20%;   
+    margin-inline: 15%;
+    margin-top: 50px;
     margin-bottom: 100px;
 }
 
-.ave-dia {
-    display: flex;
+table, td {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 
-.ave-dia img {
+tr:nth-child(even) {
+    background-color: #c6ffb8;
+}
+
+tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+td {
+    height: 300px;
+    width: 50%;
+}
+
+table {
+    background-color: #fff;
+}
+
+table img {
+    height: 100%;
+    width: 100%;
     object-fit: contain;
 }
 
-.ave-dia p {
-    margin-inline: 10%;
-
-    text-align: justify;
+.img-container {
+    width: 50%;
+    margin: 10px;
+    flex-shrink: 0;
+    align-content: center;
 }
+
+table article {
+    width: 100%;
+    text-align:end;
+    margin-inline: 30px;
+}
+
+.card-container {
+    display: flex;
+    align-content: center;
+}
+
+
 
 footer {
     background-color: #444;

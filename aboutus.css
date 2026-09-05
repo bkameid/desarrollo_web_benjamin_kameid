@@ -1,13 +1,17 @@
 body {
     font-family: open-sans, sans-serif;
     margin: 0;
+    color:#78d261
 }
 
 .top-nav {
     text-align: center;
     align-content: center;
     height: 70px;
-}
+    border-bottom: #78d261;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+}  
 
 .nav-container {      
     display: inline-block;
@@ -25,49 +29,47 @@ body {
     font-weight: 1000;
 }
 
-.center-img {
-    width:100vw;
-    height: 400px;
-    position: relative;
-    border-color: #78d261;
-    border-top-width: 5px;
-    border-top-style: solid;
-    border-bottom-width: 6px; /* Intentar reemplazar con fade out*/
-    border-bottom-style: solid;
-}
+main {
+    text-align: center;
 
-.center-img img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    margin-bottom: 50px;
 }
 
 .logo {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding: 50px;
 }
 
-main {
-    margin-inline: 20%;   
-    margin-bottom: 100px;
-}
 
-.ave-dia {
+
+.stats {
+    margin-inline:15%;
     display: flex;
+    text-align: center;
 }
 
-.ave-dia img {
+.map-container {
+    text-align: center;
+    width:50%;
+}
+
+.map-container img {
+    height: 100%;
+    width: 100%;
     object-fit: contain;
+
+    padding-left: 20px
 }
 
-.ave-dia p {
-    margin-inline: 10%;
+article {
+    text-align: center;
+}
 
+article p {
     text-align: justify;
+    padding-inline: 50px;
+    color: black;
 }
+
 
 footer {
     background-color: #444;
@@ -78,8 +80,6 @@ footer {
     display: flex;
     flex-shrink: 0;
     container-type: size;
-
-
 }
 
 footer img {

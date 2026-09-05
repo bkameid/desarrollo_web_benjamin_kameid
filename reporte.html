@@ -1,1 +1,57 @@
-<h1>请说鸟</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>このはヘダーです</title><link rel="stylesheet" type="text/css" href="./voluntario.css">
+    <meta charset="utf-8">
+</head>
+<body>   
+    <header>
+        <nav class="top-nav">
+            <div class="nav-container">
+                <a class = "active" href="avistamientos.html"> Avistamientos </a> 
+            </div>
+            <div class="nav-container">
+                <a href = "voluntario.html"> Sé Voluntario </a>
+            </div>
+            <div class="nav-container" style="background-color: #78d261; ">
+                <a href = "index.html" style="color: aliceblue;"> Volver </a>
+            </div>
+            <div class="nav-container">
+                <a href = "aboutus.html"> Sobre Nosotros </a>
+            </div>
+        </nav>
+    </header> 
+    <main>
+        <div class="logo">
+            <a href="index.html"><img src="media/logo-aves.png" alt="logo-aves"></a>
+        </div> 
+        <form>
+            <label for="nombre-ave">Nombre del Ave</label>
+            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí" required>
+            <br>
+            <label for="tipo-ave">Tipo de Ave</label>
+            <input type="text" id="tipo-ave" name="tipo-ave" placeholder="Ej: Passeriforme" required>
+            <br>
+            <label for="region">Región de Avistamiento</label>
+            <input type="text" id="region" name="region" placeholder="Ej: Metropolitana" required>
+            <br>
+            <label for="comuna">Comuna de Avistamiento</label>
+            <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago" required>
+            <br>
+            <label for="fecha">Fecha de Avistamiento</label>
+            <input type="datetime-local" id="fecha" name="fecha" required>
+            <br>
+            <label for="foto">Foto del Ave</label>
+            <input type="file" id="foto" name="foto" accept="image/*" required>
+        </form> 
+    </main>
+    <footer>
+        <div class="credits">
+            <p>
+                Página web hecha por : <br>
+                Benjamín Kameid, 2026
+            </p>
+        </div>
+        <img src="./media/proto_logo_base.png" alt="logo propio"> 
+    </footer>
+</body>
