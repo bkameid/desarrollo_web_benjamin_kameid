@@ -166,12 +166,12 @@ const validador = (event) => {
 
     event.preventDefault();
 
-    isValid = isValid && formatError(nombre, !nameV(nombre.value));
-    isValid = isValid && formatError(mail, !mailV(mail.value));
-    isValid = isValid && formatError(region, !regionV(region));
-    isValid = isValid && formatError(comuna, !comunaV(comuna, region));
-    isValid = isValid && formatError(fono, !fonoV(fono)); 
-    isValid = isValid && formatError(dob, !dobV(dob));
+    isValid = formatError(nombre, !nameV(nombre.value)) && isValid;
+    isValid = formatError(mail, !mailV(mail.value)) && isValid;
+    isValid = formatError(region, !regionV(region)) && isValid;
+    isValid = formatError(comuna, !comunaV(comuna, region)) && isValid;
+    isValid = formatError(fono, !fonoV(fono)) && isValid; 
+    isValid = formatError(dob, !dobV(dob)) && isValid;
 
     if (!genderV(gender)) {
         document.getElementById('gender-error').style.display = 'inline';
