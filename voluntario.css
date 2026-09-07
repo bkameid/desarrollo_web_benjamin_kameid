@@ -77,3 +77,16 @@ input, select {
     border-color:#8f8f9d;
     align-items: center;
 }
+
+.form-success {
+    display: none;
+    height: 50px;
+    background-color: #cfc;
+    align-content: center;
+    margin-inline: 30%;
+    text-align: center;
+    color: rgb(12, 210, 12);
+
+    border: 2px solid;
+    border-color: rgb(12, 210, 12);
+}

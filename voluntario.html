@@ -30,9 +30,10 @@
             <input type="text" id="nombre" name="nombre" placeholder="Juanito Pérez">
             <br>
             <label for="genero">Género</label>
-                <input type="radio" id="M" name="genero" value="m" required> M
-                <input type="radio" id="F" name="genero" value="f" required> F
-                <input type="radio" id="O" name="genero" value="x" required> X
+                <input type="radio" id="M" name="genero" value="m"> M
+                <input type="radio" id="F" name="genero" value="f"> F
+                <input type="radio" id="X" name="genero" value="x"> X
+                <h3 id="gender-error" style="display: none; color: red;">Sin llenar</h3>
             <br>
             <label for="email">Correo</label>
             <input type="email" id="email" name="email" placeholder="tu.correo@ejemplo.com">
@@ -41,22 +42,25 @@
             <select id="region" name="region">
                 <option value="">Seleccione una región</option>
                 <option value="arica-parinacota">Arica y Parinacota</option>
-                <option value="tarapaca">Tarapacá</option>
+                <option value="tarapacá">Tarapacá</option>
                 <option value="antofagasta">Antofagasta</option>
                 <option value="atacama">Atacama</option>
                 <option value="coquimbo">Coquimbo</option>
                 <option value="valparaiso">Valparaíso</option>
                 <option value="metropolitana">Metropolitana</option>
-                <option value="ohiggins">O'Higgins</option>
+                <option value="o'higgins">O'Higgins</option>
                 <option value="maule">Maule</option>
-                <option value="nuble">Ñuble</option>
+                <option value="ñuble">Ñuble</option>
                 <option value="biobio">Biobío</option>
-                <option value="araucania">Araucanía</option>
-                <option value="los-rios">Los Ríos</option>
-                <option value="los-lagos">Los Lagos</option>
-                <option value="aysen">Aysén</option>
-                <option value="magallanes">Magallanes</option>
+                <option value="araucanía">La Araucanía</option>
+                <option value="los rios">Los Ríos</option>
+                <option value="los lagos">Los Lagos</option>
+                <option value="aysén">Aysén</option>
+                <option value="magallanes y antártica">Magallanes y Antárica</option>
             </select> <!-- Añadir comuna de residencia -->
+            <br>
+            <label for="comuna">Comuna</label>
+            <input type="text" id="comuna" name="comuna">
             <br>
             <label for="fono">Teléfono (+56) </label>
             <input type="tel" id="fono" name="fono" placeholder="912345678">
@@ -66,12 +70,19 @@
             <br>
             <input type="submit" value="Enviar" onclick="return validador(event)">
         </form> 
-        <script src="voluntario.js"></script>
+
+        <br>
+        <div>
+            <div class="form-success" id="form-success">
+                <p><span id="span" style="font-weight: bold;">user</span>, se ha inscrito correctamente.</p>
+            </div>
+            <script src="voluntario.js"></script>
+        </div>
     </main>
     <footer>
         <div class="credits">
             <p>
-                Página web hecha por : <br>
+                Página web hecha por : <br> Benjamín Kameid
             </p>
         </div>
         <img src="./media/proto_logo_base.png" alt="logo propio"> 
