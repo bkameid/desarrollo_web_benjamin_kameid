@@ -70,3 +70,10 @@ footer img {
     padding-top: 20cqh;
     margin-left: auto;
 }
+
+input, select {
+    border: 1px solid;
+    border-radius: 3px;
+    border-color:#8f8f9d;
+    align-items: center;
+}
