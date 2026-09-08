@@ -27,7 +27,7 @@
         </div> 
         <form>
             <label for="nombre-ave">Nombre del Ave</label>
-            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí" required>
+            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí">
             <br>
             <label for="region">Región de Avistamiento</label>
             <select id="region" name="region">
@@ -51,16 +51,17 @@
             </select>
             <br>
             <label for="comuna">Comuna de Avistamiento</label>
-            <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago" required>
+            <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago">
             <br>
             <label for="fecha">Fecha de Avistamiento</label>
-            <input type="datetime-local" id="fecha" name="fecha" required>
+            <input type="date" id="fecha" name="fecha">
             <br>
             <label for="foto">Foto del Ave</label>
-            <input type="file" id="foto" name="foto" accept="image/*" required>
+            <input type="file" id="foto" name="foto" accept="image/*">
             <br>
             <input type="submit" value="   Enviar   " onclick="return validador(event)">
         </form> 
+        <script src="reporte.js"></script>
     </main>
     <footer>
         <div class="credits">
