@@ -29,11 +29,26 @@
             <label for="nombre-ave">Nombre del Ave</label>
             <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí" required>
             <br>
-            <label for="tipo-ave">Tipo de Ave</label>
-            <input type="text" id="tipo-ave" name="tipo-ave" placeholder="Ej: Passeriforme" required>
-            <br>
             <label for="region">Región de Avistamiento</label>
-            <input type="text" id="region" name="region" placeholder="Ej: Metropolitana" required>
+            <select id="region" name="region">
+                <option value="">Seleccione una región</option>
+                <option value="arica-parinacota">Arica y Parinacota</option>
+                <option value="tarapacá">Tarapacá</option>
+                <option value="antofagasta">Antofagasta</option>
+                <option value="atacama">Atacama</option>
+                <option value="coquimbo">Coquimbo</option>
+                <option value="valparaiso">Valparaíso</option>
+                <option value="metropolitana">Metropolitana</option>
+                <option value="o'higgins">O'Higgins</option>
+                <option value="maule">Maule</option>
+                <option value="ñuble">Ñuble</option>
+                <option value="biobio">Biobío</option>
+                <option value="araucanía">La Araucanía</option>
+                <option value="los rios">Los Ríos</option>
+                <option value="los lagos">Los Lagos</option>
+                <option value="aysén">Aysén</option>
+                <option value="magallanes y antártica">Magallanes y Antárica</option>
+            </select>
             <br>
             <label for="comuna">Comuna de Avistamiento</label>
             <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago" required>
@@ -43,6 +58,8 @@
             <br>
             <label for="foto">Foto del Ave</label>
             <input type="file" id="foto" name="foto" accept="image/*" required>
+            <br>
+            <input type="submit" value="   Enviar   " onclick="return validador(event)">
         </form> 
     </main>
     <footer>

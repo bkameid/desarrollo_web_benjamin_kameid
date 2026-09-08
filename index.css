@@ -77,9 +77,7 @@ footer {
 
     display: flex;
     flex-shrink: 0;
-    container-type: size;
-
-
+    container-type:size;
 }
 
 footer img {
