@@ -100,4 +100,12 @@ const validador = (event) => {
     isValid = formatError(comuna, !comunaV(comuna, region));
     isValid = formatError(fecha, !fechaV(fecha));
     isValid = formatError(foto, !fotoV(foto));
+
+    if (isValid) {
+        console.log('yay');
+        let success = document.getElementById('form-success');
+        let fotoSuccess = document.getElementById('foto-success');
+        success.style.display = 'block';
+        fotoSuccess.src = foto.value;
+    }
 }
