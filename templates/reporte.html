@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>このはヘダーです</title><link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/voluntario.css')}}">
+    <meta charset="utf-8">
+</head>
+<body>   
+    <header>
+        <nav class="top-nav">
+            <div class="nav-container">
+                <a class = "active" href="{{url_for('avistamientos')}}"> Avistamientos </a> 
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('voluntario')}}"> Sé Voluntario </a>
+            </div>
+            <div class="nav-container" style="background-color: #78d261; ">
+                <a href = "{{url_for('index')}}" style="color: aliceblue;"> Volver </a>
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('aboutus')}}"> Sobre Nosotros </a>
+            </div>
+        </nav>
+    </header> 
+    <main>
+        <div class="logo">
+            <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='media/logo-aves.png')}}" alt="logo-aves"></a>
+        </div> 
+        <form>
+            <label for="nombre-ave">Nombre del Ave</label>
+            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí">
+            <br>
+            <label for="region">Región de Avistamiento</label>
+            <select id="region" name="region">
+                <option value="">Seleccione una región</option>
+                <option value="arica-parinacota">Arica y Parinacota</option>
+                <option value="tarapacá">Tarapacá</option>
+                <option value="antofagasta">Antofagasta</option>
+                <option value="atacama">Atacama</option>
+                <option value="coquimbo">Coquimbo</option>
+                <option value="valparaiso">Valparaíso</option>
+                <option value="metropolitana">Metropolitana</option>
+                <option value="o'higgins">O'Higgins</option>
+                <option value="maule">Maule</option>
+                <option value="ñuble">Ñuble</option>
+                <option value="biobio">Biobío</option>
+                <option value="araucanía">La Araucanía</option>
+                <option value="los rios">Los Ríos</option>
+                <option value="los lagos">Los Lagos</option>
+                <option value="aysén">Aysén</option>
+                <option value="magallanes y antártica">Magallanes y Antárica</option>
+            </select>
+            <br>
+            <label for="comuna">Comuna de Avistamiento</label>
+            <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago">
+            <br>
+            <label for="fecha">Fecha de Avistamiento</label>
+            <input type="date" id="fecha" name="fecha">
+            <br>
+            <label for="foto">Foto del Ave</label>
+            <input type="file" id="foto" name="foto" accept="image/*">
+            <br>
+            <input type="submit" value="   Enviar   " onclick="return validador(event)">
+        </form> 
+        <div>
+            <div class="form-success" id="form-success">
+                <p>Reporte inscrito correctamente.</p>
+                <img id="foto-success" src="" alt="foto">
+            </div>
+            <script src="{{url_for('static', filename='js/reporte.js')}}"></script>
+        </div>
+    </main>
+    <footer>
+        <div class="credits">
+            <p>
+                Página web hecha por : <br>
+                Benjamín Kameid, 2026
+            </p>
+        </div>
+        <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
+    </footer>
+</body>
