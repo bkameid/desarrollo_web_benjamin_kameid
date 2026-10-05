@@ -36,7 +36,7 @@ def voluntario():
         if not all((nombre, email, telefono)) or comuna_data is None:
             return render_template("voluntario.html", error="Completa los datos y selecciona una comuna válida.")
         session["voluntario_id"] = db.create_voluntario(nombre, email, telefono, comuna_data["id"])
-        return redirect(url_for("reporte"))
+        
     return render_template("voluntario.html")
 
 @app.route("/reporte", methods=["GET", "POST"])
@@ -49,7 +49,8 @@ def aboutus():
 
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    data = db.get_recent_avistamientos(2)
+    return render_template("index.html", avistamientos = data)
 
 @app.route("/post-avis", methods=["POST"])
 def post_avis():

@@ -93,3 +93,19 @@ footer img {
     padding-top: 20cqh;
     margin-left: auto;
 }
+
+.img-container-avis {
+    height: 30vh;
+    width: 50%;
+}
+
+.img-container-avis img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+article {
+    display: flex;
+    padding-bottom: 30px;
+}
