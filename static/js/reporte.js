@@ -60,19 +60,10 @@ function fechaV(fecha) {
         return false;
     }
 
-    let date = new Date(fecha.value);
-    let hoy = new Date();
-
-    console.log(date.getDate());
-    console.log(hoy.getDate());
-
-    if (date <= hoy) {// funciona pero maña cuenta?
-        if (date.getDate() + 1 <= hoy.getDate()) {
-            return true;
-        }
-    }
-
-    return false;
+    const date = new Date(`${fecha.value}T00:00:00`);
+    const hoy = new Date();
+    hoy.setHours(23, 59, 59, 999);
+    return date <= hoy;
 }
 
 function fotoV(foto) {
@@ -85,8 +76,7 @@ function fotoV(foto) {
 }
 
 const validador = (event) => {
-    event.preventDefault();
-
+    
     let nombreAve = document.getElementById('nombre-ave');
     let region = document.getElementById('region');
     let comuna = document.getElementById('comuna');
@@ -95,11 +85,11 @@ const validador = (event) => {
 
     let isValid = true;
 
-    isValid = formatError(nombreAve, !nombreaveV(nombreAve));
-    isValid = formatError(region, !regionV(region));
-    isValid = formatError(comuna, !comunaV(comuna, region));
-    isValid = formatError(fecha, !fechaV(fecha));
-    isValid = formatError(foto, !fotoV(foto));
+    isValid = formatError(nombreAve, !nombreaveV(nombreAve)) && isValid;
+    isValid = formatError(region, !regionV(region)) && isValid;
+    isValid = formatError(comuna, !comunaV(comuna, region)) && isValid;
+    isValid = formatError(fecha, !fechaV(fecha)) && isValid;
+    isValid = formatError(foto, !fotoV(foto)) && isValid;
 
     if (isValid) {
         console.log('yay');
@@ -107,5 +97,8 @@ const validador = (event) => {
         let fotoSuccess = document.getElementById('foto-success');
         success.style.display = 'block';
         fotoSuccess.src = foto.value;
+        event.target.form.submit();
+    } else {
+        event.preventDefault();
     }
 }

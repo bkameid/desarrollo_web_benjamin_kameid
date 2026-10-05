@@ -173,14 +173,16 @@ const validador = (event) => {
     isValid = formatError(fono, !fonoV(fono)) && isValid; 
     isValid = formatError(dob, !dobV(dob)) && isValid;
 
-    if (!genderV(gender)) {
+    const genderValid = genderV(gender);
+    if (!genderValid) {
         document.getElementById('gender-error').style.display = 'inline';
     }
 
-    if (isValid) {
+    if (isValid && genderValid) {
         console.log('yay');
         let success = document.getElementById('form-success');
         success.style.display = 'block';
         document.getElementById('span').innerText = nombre.value;
+        event.target.form.submit();
     }
 }

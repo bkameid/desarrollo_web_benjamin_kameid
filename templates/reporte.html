@@ -25,7 +25,9 @@
         <div class="logo">
             <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='media/logo-aves.png')}}" alt="logo-aves"></a>
         </div> 
-        <form>
+        <form action="{{ url_for('post_avis') }}"
+        method="post"
+        enctype="multipart/form-data">
             <label for="nombre-ave">Nombre del Ave</label>
             <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí">
             <br>
@@ -56,11 +58,15 @@
             <label for="fecha">Fecha de Avistamiento</label>
             <input type="date" id="fecha" name="fecha">
             <br>
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Ave pequeña, de color verde y rojo.">
+            <br>
             <label for="foto">Foto del Ave</label>
             <input type="file" id="foto" name="foto" accept="image/*">
             <br>
             <input type="submit" value="   Enviar   " onclick="return validador(event)">
         </form> 
+        {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
         <div>
             <div class="form-success" id="form-success">
                 <p>Reporte inscrito correctamente.</p>

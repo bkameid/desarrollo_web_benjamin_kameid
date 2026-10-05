@@ -23,6 +23,29 @@
     </header> 
     <main>
         <table>
+            {% for avistamiento in avistamientos %}
+            {% if loop.index0 % 2 == 0 %}<tr>{% endif %}
+                <td>
+                    <div class="card-container">
+                        <div class="img-container">
+                            {% if avistamiento.ruta_archivo %}
+                            <img src="{{ url_for('static', filename=avistamiento.ruta_archivo) }}" alt="{{ avistamiento.ave }}">
+                            {% endif %}
+                        </div>
+                        <article>
+                            <h2>{{ avistamiento.ave }}</h2>
+                            <p>Avistamiento por:<br>{{ avistamiento.voluntario }}</p>
+                            <p>{{ avistamiento.lugar }}</p>
+                            <p>{{ avistamiento.fecha_hora.strftime('%d-%m-%Y') }}</p>
+                            {% if avistamiento.descripcion %}<p>{{ avistamiento.descripcion }}</p>{% endif %}
+                        </article>
+                    </div>
+                </td>
+            {% if loop.index0 % 2 == 1 or loop.last %}</tr>{% endif %}
+            {% else %}
+            <tr><td>No hay avistamientos publicados.</td></tr>
+            {% endfor %}
+            <!--
             <tr>
                 <td>
                     <div class="card-container">
@@ -99,6 +122,7 @@
                     </div>
                 </td>
             </tr>
+            -->
         </table>
     </main>
     <footer>
