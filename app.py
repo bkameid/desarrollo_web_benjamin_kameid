@@ -6,7 +6,7 @@ from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 
 from database import db
-from utils.validations import validate_volunteer
+from utils.validations import validate_image_upload, validate_report, validate_volunteer
 
 app = Flask(__name__)
 app.secret_key = "tarea2-development-key"
@@ -57,7 +57,7 @@ def reporte():
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template("aboutus.html")
+    return render_template("aboutus.html", cantidad=197 + db.get_user_count()[0]["count"])
 
 @app.route("/index")
 def index():
@@ -67,36 +67,45 @@ def index():
 @app.route("/post-avis", methods=["POST"])
 def post_avis():
     voluntario_id = session.get("voluntario_id")
-    print(voluntario_id)
+    if voluntario_id is None:
+        return redirect(url_for("voluntario"))
 
-    #if voluntario_id is None:
-    #    return redirect(url_for("voluntario"))
+    errors = validate_report(request.form)
+    region = request.form.get("region", "").strip().lower()
+    comuna = request.form.get("comuna", "").strip()
+    foto = request.files.get("foto")
+    image_error = validate_image_upload(foto)
+    if image_error:
+        errors["foto"] = image_error
+
+    region_ids = {
+        "arica-parinacota": 1, "tarapacá": 2, "antofagasta": 3,
+        "atacama": 4, "coquimbo": 5, "valparaiso": 6,
+        "metropolitana": 13, "o'higgins": 7, "maule": 8, "ñuble": 16,
+        "biobio": 9, "araucanía": 10, "los rios": 14, "los lagos": 11,
+        "aysén": 12, "magallanes y antártica": 15,
+    }
+    comuna_data = db.get_comuna_in_region(comuna, region_ids[region]) if region in region_ids and "comuna" not in errors else None
+    if comuna_data is None:
+        errors["comuna"] = "Selecciona una comuna válida para la región elegida."
 
     nombre_ave = request.form.get("nombre-ave", "").strip()
-    comuna = request.form.get("comuna", "").strip()
-    fecha = request.form.get("fecha", "").strip()
     descripcion = request.form.get("descripcion", "").strip()
-    foto = request.files.get("foto")
-    ave = db.get_ave_by_name(nombre_ave)
+    ave = db.get_ave_by_name(nombre_ave) if "nombre-ave" not in errors else None
+    if ave is None:
+        errors["nombre-ave"] = "El ave indicada no existe en el catálogo."
 
-    if not ave or not comuna or not fecha or not foto or not foto.filename:
-        print(ave, comuna, fecha, foto, foto.filename)
-        return render_template("reporte.html", error="Completa todos los campos del reporte.")
+    if errors:
+        return render_template("reporte.html", error=" ".join(errors.values()))
 
-    try:
-        fecha_hora = datetime.strptime(fecha, "%Y-%m-%d")
-    except ValueError:
-        return render_template("reporte.html", error="La fecha no es válida.")
+    fecha_hora = datetime.strptime(request.form["fecha"], "%Y-%m-%d")
 
     original_name = secure_filename(foto.filename)
     extension = Path(original_name).suffix.lower()
 
-    if extension not in {".jpg", ".jpeg", ".png", ".gif", ".webp"}:
-        return render_template("reporte.html", error="La imagen debe ser JPG, PNG, GIF o WEBP.")
-
     filename = f"{uuid4().hex}{extension}"
     foto.save(Path(app.config["UPLOAD_FOLDER"]) / filename)
-    lugar = f"{comuna}, {request.form.get('region', '').strip()}"
+    lugar = f"{comuna}, {region}"
     sighting_id = db.create_avistamiento(
         voluntario_id, ave["id"], fecha_hora, lugar, descripcion
     )

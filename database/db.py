@@ -61,6 +61,24 @@ def get_comuna(nombre, region_nombre=None):
         conn.close()
 
 
+def get_comuna_in_region(nombre, region_id):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT c.id, c.nombre
+                FROM comuna c
+                WHERE LOWER(c.nombre) = LOWER(%s) AND c.region_id = %s
+                LIMIT 1
+                """,
+                (nombre.strip(), region_id),
+            )
+            return cursor.fetchone()
+    finally:
+        conn.close()
+
+
 def create_voluntario(nombre, email, telefono, comuna_id):
     conn = get_conn()
     try:
@@ -144,6 +162,18 @@ def get_comunas_from_region(region_id):
             SELECT c.nombre FROM comuna c
             JOIN region r ON r.id = %s;
             """, region_id)
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_user_count():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(
+            """
+            SELECT Count(*) as count FROM voluntario;
+            """)
             return cursor.fetchall()
     finally:
         conn.close()
