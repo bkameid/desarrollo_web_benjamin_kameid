@@ -2,6 +2,7 @@
 
     "getRecentPosts": "SELECT a.id, av.nombre AS ave, v.nombre AS voluntario, a.fecha_hora, a.lugar, a.descripcion, r.ruta_archivo FROM avistamiento a JOIN ave av ON av.id = a.ave_id JOIN voluntario v ON v.id = a.voluntario_id LEFT JOIN registro r ON r.avistamiento_id = a.id ORDER BY a.fecha_hora DESC LIMIT %s",
     "createAvis": "INSERT INTO avistamiento (voluntario_id, ave_id, fecha_hora, lugar, descripcion) VALUES (%s, %s, %s, %s, %s)",
-    "createRegistro": "INSERT INTO registro (ruta_archivo, nombre_archivo, avistamiento_id) VALUES (%s, %s, %s)"
+    "createRegistro": "INSERT INTO registro (ruta_archivo, nombre_archivo, avistamiento_id) VALUES (%s, %s, %s)",
+    "getRegion": "SELECT * FROM region ORDER BY id;"
 
 }

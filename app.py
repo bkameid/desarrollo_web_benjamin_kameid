@@ -6,6 +6,7 @@ from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 
 from database import db
+from utils.validations import validate_volunteer
 
 app = Flask(__name__)
 app.secret_key = "tarea2-development-key"
@@ -27,17 +28,28 @@ def avistamientos():
 @app.route("/voluntario", methods=["GET", "POST"])
 def voluntario():
     if request.method == "POST":
-        nombre = request.form.get("nombre", "").strip()
-        email = request.form.get("email", "").strip()
-        telefono = request.form.get("fono", "").strip()
-        comuna = request.form.get("comuna", "").strip()
-        region = request.form.get("region", "").strip()
-        comuna_data = db.get_comuna(comuna)
-        if not all((nombre, email, telefono)) or comuna_data is None:
-            return render_template("voluntario.html", error="Completa los datos y selecciona una comuna válida.")
-        session["voluntario_id"] = db.create_voluntario(nombre, email, telefono, comuna_data["id"])
-        
-    return render_template("voluntario.html")
+        form_data = request.form
+        errors = validate_volunteer(form_data)
+        regiones = db.get_region()
+        region = next((item for item in regiones if str(item["id"]) == form_data.get("region", "")), None)
+
+        if region is None:
+            errors["region"] = "Selecciona una región válida."
+
+        comuna = form_data.get("comuna", "").strip()
+        db_comuna = db.get_comuna(comuna, region["nombre"]) if region and "comuna" not in errors else None
+        if db_comuna is None:
+            errors["comuna"] = "Selecciona una comuna válida para la región elegida."
+
+        if errors:
+            return render_template("voluntario.html", error=" ".join(errors.values()), regiones=regiones)
+
+        nombre = form_data.get("nombre", "").strip()
+        email = form_data.get("email", "").strip()
+        telefono = form_data.get("fono", "").strip()
+        session["voluntario_id"] = db.create_voluntario(nombre, email, telefono, db_comuna["id"])
+        return redirect(url_for("reporte"))
+    return render_template("voluntario.html", regiones=db.get_region())
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():

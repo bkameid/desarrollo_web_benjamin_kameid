@@ -40,7 +40,6 @@ def get_ave_by_name(nombre):
     finally:
         conn.close()
 
-
 def get_comuna(nombre, region_nombre=None):
     conn = get_conn()
     try:
@@ -122,7 +121,29 @@ def get_recent_avistamientos(limit=20):
     conn = get_conn()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(QUERY_DICT["getRecentPosts"], (limit,))
+            cursor.execute(QUERY_DICT["getRecentPosts"], (limit))
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_region():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(QUERY_DICT["getRegion"])
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_comunas_from_region(region_id):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(
+            """
+            SELECT c.nombre FROM comuna c
+            JOIN region r ON r.id = %s;
+            """, region_id)
             return cursor.fetchall()
     finally:
         conn.close()
