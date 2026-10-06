@@ -38,7 +38,7 @@
                             <p>{{ avistamiento.lugar }}</p>
                             <p>{{ avistamiento.fecha_hora.strftime('%d-%m-%Y') }}</p>
                             {% if avistamiento.descripcion %}<p>{{ avistamiento.descripcion }}</p>{% endif %}
-                        </article>
+                        </article> <!-- Tirar description debajo de todo -->
                     </div>
                 </td>
             {% if loop.index0 % 2 == 1 or loop.last %}</tr>{% endif %}

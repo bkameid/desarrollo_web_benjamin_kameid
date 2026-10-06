@@ -29,27 +29,19 @@
         method="post"
         enctype="multipart/form-data">
             <label for="nombre-ave">Nombre del Ave</label>
-            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej: Colibrí">
+                <select id="nombre-ave" name="nombre-ave">
+                    <option value="">Seleccione ave</option>
+                    {% for ave in aves %}
+                    <option value="{{ ave.id }}">{{ ave.nombre }}</option>
+                    {% endfor %}
+                </select>
             <br>
             <label for="region">Región de Avistamiento</label>
             <select id="region" name="region">
                 <option value="">Seleccione una región</option>
-                <option value="arica-parinacota">Arica y Parinacota</option>
-                <option value="tarapacá">Tarapacá</option>
-                <option value="antofagasta">Antofagasta</option>
-                <option value="atacama">Atacama</option>
-                <option value="coquimbo">Coquimbo</option>
-                <option value="valparaiso">Valparaíso</option>
-                <option value="metropolitana">Metropolitana</option>
-                <option value="o'higgins">O'Higgins</option>
-                <option value="maule">Maule</option>
-                <option value="ñuble">Ñuble</option>
-                <option value="biobio">Biobío</option>
-                <option value="araucanía">La Araucanía</option>
-                <option value="los rios">Los Ríos</option>
-                <option value="los lagos">Los Lagos</option>
-                <option value="aysén">Aysén</option>
-                <option value="magallanes y antártica">Magallanes y Antárica</option>
+                {% for region in regiones %}
+                <option value="{{ region.id }}">{{ region.nombre }}</option>
+                {% endfor %}
             </select>
             <br>
             <label for="comuna">Comuna de Avistamiento</label>

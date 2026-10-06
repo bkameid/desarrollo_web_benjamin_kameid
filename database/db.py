@@ -28,13 +28,13 @@ def get_conn():
     return conn
 
 
-def get_ave_by_name(nombre):
+def get_ave_by_id(id):
     conn = get_conn()
     try:
         with conn.cursor() as cursor:
             cursor.execute(
-                "SELECT id, nombre FROM ave WHERE LOWER(nombre) = LOWER(%s) LIMIT 1",
-                (nombre.strip(),),
+                "SELECT * FROM ave WHERE id = %s;",
+                (id.strip(),),
             )
             return cursor.fetchone()
     finally:
@@ -174,6 +174,30 @@ def get_user_count():
             """
             SELECT Count(*) as count FROM voluntario;
             """)
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_aves():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(
+            """
+            SELECT * FROM ave;
+            """)
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_nombreregion_from_id(id):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(
+            """
+            SELECT nombre FROM region WHERE id = %s;
+            """, id)
             return cursor.fetchall()
     finally:
         conn.close()

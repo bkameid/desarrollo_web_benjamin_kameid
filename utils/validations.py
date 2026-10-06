@@ -67,16 +67,11 @@ def validate_report(data):
     comuna = data.get("comuna", "").strip()
     fecha = data.get("fecha", "").strip()
     descripcion = data.get("descripcion", "").strip()
-    valid_regions = {
-        "arica-parinacota", "tarapacá", "antofagasta", "atacama", "coquimbo",
-        "valparaiso", "metropolitana", "o'higgins", "maule", "ñuble", "biobio",
-        "araucanía", "los rios", "los lagos", "aysén", "magallanes y antártica",
-    }
 
-    if not nombre_ave or len(nombre_ave) > MAX_BIRD_NAME_LENGTH or not TEXT_PATTERN.fullmatch(nombre_ave):
+    if not nombre_ave:
         errors["nombre-ave"] = "Ingresa un nombre de ave válido."
 
-    if region not in valid_regions:
+    if not region or not region.isdigit() or int(region) <= 0:
         errors["region"] = "Selecciona una región válida."
 
     if not comuna or len(comuna) > MAX_COMUNA_LENGTH or not TEXT_PATTERN.fullmatch(comuna):
@@ -92,7 +87,7 @@ def validate_report(data):
     if len(descripcion) > MAX_DESCRIPTION_LENGTH or (
         descripcion and not TEXT_PATTERN.fullmatch(descripcion)
     ):
-        errors["descripcion"] = "La descripción contiene caracteres no permitidos o es demasiado larga."
+        errors["descripcion"] = "La descripción contiene caracteres no permitidos o execde los 1000 caracteres."
 
     return errors
 
