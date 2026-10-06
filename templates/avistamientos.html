@@ -8,7 +8,7 @@
     <header>
         <nav class="top-nav">
             <div class="nav-container" style="background-color: #78d261; ">
-                <a href = "{{url_for('index')}}" style="color: aliceblue;"> Volver </a>
+                <a href = "{{url_for('home')}}" style="color: aliceblue;"> Volver </a>
             </div>
             <div class="nav-container">
                 <a href = "{{url_for('voluntario')}}"> Sé Voluntario </a>
@@ -45,6 +45,20 @@
             {% else %}
             <tr><td>No hay avistamientos publicados.</td></tr>
             {% endfor %}
+            </table>
+            <nav class="pagination" aria-label="Paginación de avistamientos">
+                {% if page > 1 %}
+                <a href="{{ url_for('avistamientos', page=page - 1) }}">Anterior</a>
+                {% else %}
+                <span class="disabled">Anterior</span>
+                {% endif %}
+                <span>Página {{ page }} de {{ total_pages }}</span>
+                {% if page < total_pages %}
+                <a href="{{ url_for('avistamientos', page=page + 1) }}">Siguiente</a>
+                {% else %}
+                <span class="disabled">Siguiente</span>
+                {% endif %}
+            </nav>
             <!--
             <tr>
                 <td>
@@ -123,7 +137,6 @@
                 </td>
             </tr>
             -->
-        </table>
     </main>
     <footer>
         <div class="credits">
@@ -132,6 +145,6 @@
                 Benjamín Kameid, 2026
             </p>
         </div>
-        <img src="./media/proto_logo_base.png" alt="logo propio"> 
+        <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
     </footer>
 </body>

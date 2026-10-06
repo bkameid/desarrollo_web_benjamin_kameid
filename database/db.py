@@ -135,12 +135,22 @@ def create_registro(ruta_archivo, nombre_archivo, avistamiento_id):
         conn.close()
 
 
-def get_recent_avistamientos(limit=20):
+def get_recent_avistamientos(limit=20, offset=0):
     conn = get_conn()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(QUERY_DICT["getRecentPosts"], (limit))
+            cursor.execute(QUERY_DICT["getRecentPosts"], (limit, offset))
             return cursor.fetchall()
+    finally:
+        conn.close()
+
+
+def get_avistamiento_count():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(QUERY_DICT["countPosts"])
+            return cursor.fetchone()["total"]
     finally:
         conn.close()
 

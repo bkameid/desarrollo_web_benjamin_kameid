@@ -43,7 +43,6 @@
                 <p>Avistamiento por:<br>{{ avis.voluntario }}</p>
                 <p>{{ avis.lugar }}</p>
                 <p>{{ avis.fecha_hora.strftime('%d-%m-%Y') }}</p>
-                {% if avis.descripcion %}<p>{{ avis.descripcion }}</p>{% endif %}
             </div>
             </article>
     {% endfor %}

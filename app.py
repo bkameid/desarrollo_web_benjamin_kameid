@@ -22,8 +22,22 @@ def home():
 
 @app.route("/avistamientos")
 def avistamientos():
-    data = db.get_recent_avistamientos()
-    return render_template("avistamientos.html", avistamientos=data)
+    page_size = 10
+    try:
+        page = max(1, int(request.args.get("page", 1)))
+    except (TypeError, ValueError):
+        page = 1
+
+    total = db.get_avistamiento_count()
+    total_pages = max(1, (total + page_size - 1) // page_size)
+    page = min(page, total_pages)
+    data = db.get_recent_avistamientos(page_size, (page - 1) * page_size)
+    return render_template(
+        "avistamientos.html",
+        avistamientos=data,
+        page=page,
+        total_pages=total_pages,
+    )
 
 @app.route("/voluntario", methods=["GET", "POST"])
 def voluntario():

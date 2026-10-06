@@ -58,6 +58,30 @@ table {
     background-color: #fff;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.pagination a,
+.pagination .disabled {
+    padding: 10px 16px;
+    border: 1px solid #78d261;
+    text-decoration: none;
+}
+
+.pagination a {
+    color: #26751a;
+}
+
+.pagination .disabled {
+    color: #888;
+    border-color: #bbb;
+}
+
 table img {
     height: 100%;
     width: 100%;
