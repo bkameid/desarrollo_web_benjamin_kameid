@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Unión de Ornitólogos</title><link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/index.css')}}">
+    <meta charset="utf-8">
+</head>
+<body>
+    
+    <header>
+        <nav class="top-nav">
+            <div class="nav-container">
+                <a class = "active" href="{{url_for('avistamientos')}}"> Avistamientos </a> 
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('voluntario')}}"> Sé Voluntario </a>
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('reporte')}}"> Reportar Avistamientos </a>
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('aboutus')}}"> Sobre Nosotros </a>
+            </div>
+        </nav>
+        <div class="center-img">
+            <img alt="Imagen de Pájaros" src="{{url_for('static', filename='media/Imagen_birds.webp')}}"> <!-- Si la imagen está media mal editada ok perdón o-->
+            <a href="https://aveschile.cl/">
+                <div class="logo">
+                    <img src="{{url_for('static', filename='media/logo-aves.png')}}" alt="logo-aves">
+                </div>
+            </a>
+        </div>
+    </header>    
+    <main>
+
+    <h1>Últimos Avistamientos</h1>
+    {% for avis in avistamientos %}
+    <h3>{{avis.ave}}</h3>
+        <article> <!-- 注意注意 modificar ave del dia a last 2 report -->
+            <div class="img-container-avis">
+                <img src="{{ url_for('static', filename=avis.ruta_archivo) }}" alt="{{ avis.ave }}">
+            </div>
+            <div> <!-- Content -->
+                <p>Avistamiento por:<br>{{ avis.voluntario }}</p>
+                <p>{{ avis.lugar }}</p>
+                <p>{{ avis.fecha_hora.strftime('%d-%m-%Y') }}</p>
+            </div>
+            </article>
+    {% endfor %}
+    </main>
+    <div class="spacer"></div>
+    <footer>
+        <div class="credits">
+            <p>
+                Página web hecha por : <br>
+                Benjamín Kameid, 2026
+            </p>
+        </div>
+        <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
+    </footer>
+</body>
+</html>

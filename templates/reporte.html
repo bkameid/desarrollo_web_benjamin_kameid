@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Unión de Ornitólogos</title><link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/voluntario.css')}}">
+    <meta charset="utf-8">
+</head>
+<body>   
+    <header>
+        <nav class="top-nav">
+            <div class="nav-container">
+                <a class = "active" href="{{url_for('avistamientos')}}"> Avistamientos </a> 
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('voluntario')}}"> Sé Voluntario </a>
+            </div>
+            <div class="nav-container" style="background-color: #78d261; ">
+                <a href = "{{url_for('index')}}" style="color: aliceblue;"> Volver </a>
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('aboutus')}}"> Sobre Nosotros </a>
+            </div>
+        </nav>
+    </header> 
+    <main>
+        <div class="logo">
+            <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='media/logo-aves.png')}}" alt="logo-aves"></a>
+        </div> 
+        <form action="{{ url_for('post_avis') }}"
+        method="post"
+        enctype="multipart/form-data">
+            <label for="nombre-ave">Nombre del Ave</label>
+                <select id="nombre-ave" name="nombre-ave">
+                    <option value="">Seleccione ave</option>
+                    {% for ave in aves %}
+                    <option value="{{ ave.id }}">{{ ave.nombre }}</option>
+                    {% endfor %}
+                </select>
+            <br>
+            <label for="region">Región de Avistamiento</label>
+            <select id="region" name="region">
+                <option value="">Seleccione una región</option>
+                {% for region in regiones %}
+                <option value="{{ region.id }}">{{ region.nombre }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="comuna">Comuna de Avistamiento</label>
+            <input type="text" id="comuna" name="comuna" placeholder="Ej: Santiago">
+            <br>
+            <label for="fecha">Fecha de Avistamiento</label>
+            <input type="date" id="fecha" name="fecha">
+            <br>
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Ave pequeña, de color verde y rojo.">
+            <br>
+            <label for="foto">Foto del Ave</label>
+            <input type="file" id="foto" name="foto" accept="image/*">
+            <br>
+            <input type="submit" value="   Enviar   " onclick="return validador(event)">
+        </form> 
+        {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+        <div>
+            <div class="form-success" id="form-success">
+                <p>Reporte inscrito correctamente.</p>
+                <img id="foto-success" src="" alt="foto">
+            </div>
+            <script src="{{url_for('static', filename='js/reporte.js')}}"></script>
+        </div>
+    </main>
+    <footer>
+        <div class="credits">
+            <p>
+                Página web hecha por : <br>
+                Benjamín Kameid, 2026
+            </p>
+        </div>
+        <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
+    </footer>
+</body>
