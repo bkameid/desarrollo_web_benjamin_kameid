@@ -26,7 +26,7 @@
             <a href="{{url_for('index')}}"><img src="{{url_for('static', filename='media/logo-aves.png')}}" alt="logo-aves"></a>
         </div> 
 
-        <div class="stats">
+        <div class="aboutus-container">
             <div style="width: 50%;"> <!-- Columna izq -->            
                 <article headingOffset="1">
                     <h1>Quienes somos</h1>
@@ -50,12 +50,29 @@
                         <h1><span style="font-size:50px">{{cantidad}}</span> <span style="color: black; font-weight: normal; font-size:large;"> miembros</span></h1>
                     </div>
                 </article>
-            </div> <!-- Columna der -->
-                <div class="map-container">
-                    <h1>Miembros por región</h1>
-                    <img src="media/chile.png" alt="Stats en mapa">
-                </div>
+            </div> 
+
+            <div class="map-container"> <!-- Columna der -->
+                <h1>Miembros por región</h1>
+                <img src="media/chile.png" alt="Stats en mapa">
+            </div>
         </div>
+
+        <div class="stats">
+            <article style="width: 50%;">
+                <h1>Avistameintos por día</h1>
+                <div class="chart-container">
+                    <div id="line-chart" class="chart"></div>
+                </div>
+            </article>
+            <article style="width: 50%;">
+                <h1>Avistamientos por ave</h1>
+                <div class="chart-container">
+                    <div id="pie-chart" class="chart"></div>
+                </div>
+            </article>
+        </div>
+
     </main>
     <footer>
         <div class="credits">
@@ -66,3 +83,8 @@
         </div>
         <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
     </footer>
+
+{% block scripts %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="{{url_for('static', filename='js/charts.js')}}"></script>
+{% endblock %}

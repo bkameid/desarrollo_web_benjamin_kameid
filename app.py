@@ -2,7 +2,8 @@ from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify
+from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 
 from database import db
@@ -67,12 +68,16 @@ def voluntario():
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
+    voluntario_id = session.get("voluntario_id")
+    
+    #if voluntario_id is None:
+    #    return redirect(url_for("voluntario"))
+
     return render_template("reporte.html", regiones=db.get_region(), aves=db.get_aves())
 
 @app.route("/aboutus")
 def aboutus():
     return render_template("aboutus.html", cantidad=197 + db.get_user_count()[0]["count"])
-
 @app.route("/index")
 def index():
     data = db.get_recent_avistamientos(2)
@@ -81,6 +86,7 @@ def index():
 @app.route("/post-avis", methods=["POST"])
 def post_avis():
     voluntario_id = session.get("voluntario_id")
+
     if voluntario_id is None:
         return redirect(url_for("voluntario"))
 
@@ -106,7 +112,7 @@ def post_avis():
     if errors:
         return render_template("reporte.html", error=" ".join(errors.values()), aves = db.get_aves(), regiones = db.get_region())
 
-    fecha_hora = datetime.strptime(request.form["fecha"], "%Y-%m-%d")
+    fecha_hora = datetime.strptime(request.form["fecha"], "%Y-%m-%dT%H:%M")
 
     original_name = secure_filename(foto.filename)
     extension = Path(original_name).suffix.lower()
@@ -119,3 +125,25 @@ def post_avis():
     )
     db.create_registro(f"uploads/{filename}", original_name, sighting_id)
     return redirect(url_for("avistamientos"))
+
+@app.route("/get-avis-day-download", methods=["GET"])
+#@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_avis_day_download():
+    data_ddhh = db.get_stats_postsdia() # get tabla de posts por dia y hora..............
+    response = jsonify(data_ddhh)
+    response.headers["Content-Disposition"] = 'attachment; filename="avis-day.json"'
+    return response
+
+@app.route("/get-avis-day", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_avis_day():
+    data_ddhh = db.get_stats_postsdia() 
+    response = jsonify(data_ddhh)
+    return response
+
+@app.route("/get-avis-bird", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_avis_day():
+    data_ddhh = db.get_stats_postsdia() # get tabla de posts por dia y hora..............
+    response = jsonify(data_ddhh)
+    return response

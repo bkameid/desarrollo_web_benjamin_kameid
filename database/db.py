@@ -211,3 +211,36 @@ def get_nombreregion_from_id(id):
             return cursor.fetchall()
     finally:
         conn.close()
+
+def get_stats_postsdia():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT CAST(fecha_hora AS DATE) as fecha, COUNT(*) FROM avistamiento GROUP BY CAST(fecha_hora AS DATE);
+            """)
+            return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_stats_avisave():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT b.nombre, COUNT(*) as cantidad FROM avistamiento a JOIN ave b ON a.ave_id = b.id GROUP BY (a.ave_id);
+            """)
+        return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_stats_volcomuna():
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT c.nombre, COUNT(*) as cantidad FROM voluntario v JOIN comuna c ON v.comuna_id = c.id GROUP BY (comuna_id); 
+            """)
+        return cursor.fetchall()
+    finally:
+        conn.close()

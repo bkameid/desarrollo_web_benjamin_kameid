@@ -78,9 +78,9 @@ def validate_report(data):
         errors["comuna"] = "Ingresa una comuna válida."
 
     try:
-        fecha_avistamiento = datetime.strptime(fecha, "%Y-%m-%d").date()
-        if fecha_avistamiento > date.today():
-            errors["fecha"] = "La fecha no puede ser futura."
+        fecha_avistamiento = datetime.strptime(fecha, "%Y-%m-%dT%H:%M")
+        if fecha_avistamiento > datetime.now():
+            errors["fecha"] = "La fecha y hora no pueden ser futuras."
     except ValueError:
         errors["fecha"] = "Ingresa una fecha válida."
 
