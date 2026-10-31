@@ -1,54 +1,54 @@
 async function cargarGraficoLine() {
-  try {
-    const respuesta = await fetch('http://127.0.0.1:5000/get-avis-day');
+    try {
+        const respuesta = await fetch('http://127.0.0.1:5000/get-avis-day');
 
-    if (!respuesta.ok) {
-      throw new Error(`Error HTTP: ${respuesta.status}`);
-    }
+        if (!respuesta.ok) {
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
 
-    const datosJson = await respuesta.json();
+        const datosJson = await respuesta.json();
 
-    const MS_POR_DIA = 24 * 60 * 60 * 1000;
-    const hoy = new Date();
-    const fin = Date.UTC(
-      hoy.getUTCFullYear(),
-      hoy.getUTCMonth(),
-      hoy.getUTCDate()
-    );
+        const MS_POR_DIA = 24 * 60 * 60 * 1000;
+        const hoy = new Date();
+        const fin = Date.UTC(
+        hoy.getUTCFullYear(),
+        hoy.getUTCMonth(),
+        hoy.getUTCDate()
+        );
 
-    const fechaInicio = new Date(fin);
-    fechaInicio.setUTCFullYear(fechaInicio.getUTCFullYear() - 1);
-    const inicio = fechaInicio.getTime();
+        const fechaInicio = new Date(fin);
+        fechaInicio.setUTCFullYear(fechaInicio.getUTCFullYear() - 1);
+        const inicio = fechaInicio.getTime();
 
-    // Guarda los counts por día UTC.
-    const valoresPorDia = new Map();
+        // Guarda los counts por día UTC.
+        const valoresPorDia = new Map();
 
-    datosJson.forEach((registro) => {
-      const fechaParseada = Date.parse(registro.fecha);
+        datosJson.forEach((registro) => {
+            const fechaParseada = Date.parse(registro.fecha);
 
-      if (Number.isNaN(fechaParseada)) {
-        return;
-      }
+            if (Number.isNaN(fechaParseada)) {
+                return;
+            }
 
-      const fecha = new Date(fechaParseada);
-      const dia = Date.UTC(
-        fecha.getUTCFullYear(),
-        fecha.getUTCMonth(),
-        fecha.getUTCDate()
-      );
+            const fecha = new Date(fechaParseada);
+            const dia = Date.UTC(
+                fecha.getUTCFullYear(),
+                fecha.getUTCMonth(),
+                fecha.getUTCDate()
+            );
 
-      if (dia >= inicio && dia <= fin) {
-        const count = Number(registro['COUNT(*)']) || 0;
-        valoresPorDia.set(dia, (valoresPorDia.get(dia) || 0) + count);
-      }
-    });
+            if (dia >= inicio && dia <= fin) {
+                const count = Number(registro['COUNT(*)']) || 0;
+                valoresPorDia.set(dia, (valoresPorDia.get(dia) || 0) + count);
+            }
+        });
 
-    // Añade los días ausentes con count = 0.
-    const datos = [];
+        // Añade los días ausentes con count = 0.
+        const datos = [];
 
-    for (let dia = inicio; dia <= fin; dia += MS_POR_DIA) {
-      datos.push([dia, valoresPorDia.get(dia) || 0]);
-    }
+        for (let dia = inicio; dia <= fin; dia += MS_POR_DIA) {
+            datos.push([dia, valoresPorDia.get(dia) || 0]);
+        }
 
     Highcharts.chart('line-chart', {
         chart: {
@@ -58,6 +58,10 @@ async function cargarGraficoLine() {
 
         title: {
             text: ''
+        },
+
+        legend: {
+            enabled: false
         },
 
         xAxis: {
@@ -98,8 +102,9 @@ async function cargarGraficoLine() {
             name: 'Avisos',
             data: datos,
             color: '#78d261',
+            lineWidth: 3,
             marker: {
-            enabled: false
+                enabled: false
             }
         }]
         });
@@ -110,8 +115,46 @@ async function cargarGraficoLine() {
 
 async function cargarGraficoPie() {
     try {
-        const respuesta = await fetch();
+        const respuesta = await fetch('http://127.0.0.1:5000/get-avis-bird');
+
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datosJson = await respuesta.json();
+        const datos = [];
+
+        datosJson.forEach((registro) => {
+            datos.push([registro["nombre"], registro["cantidad"]]);
+        })
+
+        Highcharts.chart('pie-chart', {
+        chart: {
+            type: 'pie',
+            backgroundColor:'#fff'
+        },
+
+        title: {
+            text: ''
+        },
+
+        tooltip: {
+            pointFormat: '<b>{point.y}</b> ({point.percentage:.1f}%)'
+        },
+
+        series: [{
+            name: 'Avisos',
+            data: datos,
+            marker: {
+            enabled: false
+            }
+        }]
+        });
+
+    } catch (error) {
+        console.error('No se pudieron cargar los datos:', error);
     }
 }
 
 cargarGraficoLine();
+cargarGraficoPie();

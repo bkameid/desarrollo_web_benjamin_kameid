@@ -77,7 +77,7 @@ def reporte():
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template("aboutus.html", cantidad=197 + db.get_user_count()[0]["count"])
+    return render_template("aboutus.html", cantidad=db.get_user_count()[0]["count"])
 @app.route("/index")
 def index():
     data = db.get_recent_avistamientos(2)
@@ -137,13 +137,13 @@ def get_avis_day_download():
 @app.route("/get-avis-day", methods=["GET"])
 @cross_origin(origin="127.0.0.1", supports_credentials=True)
 def get_avis_day():
-    data_ddhh = db.get_stats_postsdia() 
-    response = jsonify(data_ddhh)
+    data = db.get_stats_postsdia() 
+    response = jsonify(data)
     return response
 
 @app.route("/get-avis-bird", methods=["GET"])
 @cross_origin(origin="127.0.0.1", supports_credentials=True)
-def get_avis_day():
-    data_ddhh = db.get_stats_postsdia() # get tabla de posts por dia y hora..............
-    response = jsonify(data_ddhh)
+def get_avis_bird():
+    data = db.get_stats_avisave()
+    response = jsonify(data)
     return response
