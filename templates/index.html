@@ -37,7 +37,9 @@
     <h3>{{avis.ave}}</h3>
         <article> <!-- 注意注意 modificar ave del dia a last 2 report -->
             <div class="img-container-avis">
-                <img src="{{ url_for('static', filename=avis.ruta_archivo) }}" alt="{{ avis.ave }}">
+                {% if avis.ruta_archivo %}
+                    <img src="{{ url_for('static', filename=avis.ruta_archivo) }}" alt="{{ avis.ave }}">
+                {% endif %}
             </div>
             <div> <!-- Content -->
                 <p>Avistamiento por:<br>{{ avis.voluntario }}</p>

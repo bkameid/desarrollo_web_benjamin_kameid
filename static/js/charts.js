@@ -156,5 +156,52 @@ async function cargarGraficoPie() {
     }
 }
 
+async function cargarGraficoMapa() {
+    try {
+        const [respuestaMapa, respuestaDatos] = await Promise.all([
+            fetch('/datos/comunas-chile.geojson'),
+            fetch('http://127.0.0.1:5000/get-avis-por-comuna')
+        ]);
+
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datosJson = await respuesta.json();
+        const datos = [];
+
+        datosJson.forEach((registro) => {
+            datos.push([registro["nombre"], registro["cantidad"]]);
+        })
+
+        Highcharts.chart('pie-chart', {
+        chart: {
+            type: 'pie',
+            backgroundColor:'#fff'
+        },
+
+        title: {
+            text: ''
+        },
+
+        tooltip: {
+            pointFormat: '<b>{point.y}</b> ({point.percentage:.1f}%)'
+        },
+
+        series: [{
+            name: 'Avisos',
+            data: datos,
+            marker: {
+            enabled: false
+            }
+        }]
+        });
+
+    } catch (error) {
+        console.error('No se pudieron cargar los datos:', error);
+    }
+}
+
 cargarGraficoLine();
 cargarGraficoPie();
+cargarGraficoMapa();

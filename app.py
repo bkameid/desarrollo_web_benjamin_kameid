@@ -23,7 +23,7 @@ def home():
 
 @app.route("/avistamientos")
 def avistamientos():
-    page_size = 10
+    page_size = 6
     try:
         page = max(1, int(request.args.get("page", 1)))
     except (TypeError, ValueError):
@@ -119,20 +119,13 @@ def post_avis():
 
     filename = f"{uuid4().hex}{extension}"
     foto.save(Path(app.config["UPLOAD_FOLDER"]) / filename)
-    lugar = f"{comuna}, {db.get_nombreregion_from_id(region_id)}" #HERE
+    lugar = f"{comuna_data["nombre"]}, {db.get_nombreregion_from_id(region_id)[0]["nombre"]}" #HERE
     sighting_id = db.create_avistamiento(
         voluntario_id, ave["id"], fecha_hora, lugar, descripcion
     )
     db.create_registro(f"uploads/{filename}", original_name, sighting_id)
     return redirect(url_for("avistamientos"))
 
-@app.route("/get-avis-day-download", methods=["GET"])
-#@cross_origin(origin="127.0.0.1", supports_credentials=True)
-def get_avis_day_download():
-    data_ddhh = db.get_stats_postsdia() # get tabla de posts por dia y hora..............
-    response = jsonify(data_ddhh)
-    response.headers["Content-Disposition"] = 'attachment; filename="avis-day.json"'
-    return response
 
 @app.route("/get-avis-day", methods=["GET"])
 @cross_origin(origin="127.0.0.1", supports_credentials=True)
@@ -145,5 +138,12 @@ def get_avis_day():
 @cross_origin(origin="127.0.0.1", supports_credentials=True)
 def get_avis_bird():
     data = db.get_stats_avisave()
+    response = jsonify(data)
+    return response
+
+@app.route("/get-vol-comuna", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_vol_comuna():
+    data = db.get_stats_volcomuna()
     response = jsonify(data)
     return response
