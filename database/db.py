@@ -1,6 +1,6 @@
 import pymysql
 import json
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 
 DB_NAME = "tarea2"
@@ -242,5 +242,50 @@ def get_stats_volcomuna():
             SELECT c.nombre, COUNT(*) as cantidad FROM voluntario v JOIN comuna c ON v.comuna_id = c.id GROUP BY (comuna_id); 
             """)
         return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_avistamiento_id(id):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT ruta_archivo, v.nombre, a.lugar, fecha_hora, b.nombre as ave, descripcion
+            FROM avistamiento a 
+            JOIN voluntario v ON v.id = a.voluntario_id 
+            JOIN ave b ON b.id = a.ave_id
+            LEFT JOIN registro r ON a.id = r.avistamiento_id 
+            WHERE %s = a.id
+            """, id)
+        return cursor.fetchall()
+    finally:
+        conn.close()
+
+def get_post_comment(id):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT *
+            FROM comentario
+            WHERE avistamiento_id = %s
+            """, id)
+        return cursor.fetchall()
+    finally:
+        conn.close()
+
+def create_comment(idAvis, nombre, texto):
+    conn = get_conn()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            INSERT INTO comentario (nombre, texto, fecha, avistamiento_id)
+            VALUES(%s,%s,%s,%s);
+            """, (nombre, texto, date.today(), idAvis)     
+            )
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()

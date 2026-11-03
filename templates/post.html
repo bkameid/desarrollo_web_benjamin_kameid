@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Unión de Ornitólogos</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/avistamientos.css')}}">
+    <meta charset="utf-8">
+
+    <style>
+
+        main {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            max-height: 600px;
+        }
+
+        .info {
+            display: flex;
+            justify-content: center;
+        }
+
+        img {
+            object-fit: contain;
+            height: 600px;
+        }
+
+        p {
+            margin: 0 20px;
+        }
+
+        .desc {
+            margin-top: 20px;
+            color: #888;
+            justify-content: center;
+            display: flex;
+        }
+
+        .spacer {
+            height: 5px;
+            width: 200vw;
+            background-color: #78d261;
+            margin-left: -100vw;
+            margin-top: 50px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .comments-container {
+            margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .comment {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            background-color: #eee;
+        }
+
+    </style>
+
+    <script src="{{ url_for('static', filename='js/post.js') }}"></script>
+</head>
+<body>   
+    <header>
+        <nav class="top-nav">
+            <div class="nav-container" style="background-color: #78d261; ">
+                <a href = "{{url_for('avistamientosPaged', page=lastPg)}}" style="color: aliceblue;"> Volver </a>
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('voluntario')}}"> Sé Voluntario </a>
+            </div>
+            <div class="nav-container">
+                <a class = "active" href="{{url_for('reporte')}}"> Reportar Avistamientos </a> 
+            </div>
+            <div class="nav-container">
+                <a href = "{{url_for('aboutus')}}"> Sobre Nosotros </a>
+            </div>
+        </nav>
+    </header> 
+
+    <main> <!-- Arfer特别可爱的神 -->
+        <div class="post-containter">
+            <h1>{{ avistamiento.ave }}</h1>
+            <div class="info">
+                <p>Avistamiento por:<br>{{ avistamiento.nombre }}</p>
+                <p>Visto en:<br>{{ avistamiento.lugar }}</p>
+                <p>Avistado el:<br>{{ avistamiento.fecha_hora }}</p>
+            </div>
+            <div class="desc">
+                <article style="width: 70%;">
+                    <i>{{ avistamiento.descripcion }}</i>
+                </article>
+            </div>
+            <div class="container">
+                {% if avistamiento.ruta_archivo %}
+                    <img src="{{ url_for('static', filename=avistamiento.ruta_archivo) }}">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="form-container">
+            <form action="{{ url_for('post_comment', idAvis=id, lastPg=lastPg)}}" method="post">
+                <input type="text" id="comentario-name" name="comentario-name" placeholder="Nombre" style="width:39ch;">
+                <br>
+                <textarea id="comentario-text" name="comentario-text" placeholder="Comentario" rows="3" cols="40"></textarea>
+                <br>
+                <input type="submit" value="Publicar comentario" onclick="return validador(event)">
+                <p>{{errMsg}}</p>
+            </form>
+        </div>
+
+        <div class="comments-container">    
+            {%for comment in comments%}
+                <div class="comment">
+                    <p><strong>{{ comment.nombre }}</strong><span style="font-size: small;margin-left: 20px; color:#555">({{ comment.fecha.strftime('%d-%m-%Y') }})</span></p>
+                    <p>{{ comment.texto }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="credits">
+            <p>
+                Página web hecha por : <br>
+                Crypto :3, 2026
+            </p>
+        </div>
+        <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
+    </footer>
+</body>
+</html>

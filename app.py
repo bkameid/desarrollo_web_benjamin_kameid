@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 from database import db
 from utils.validations import validate_image_upload, validate_report, validate_volunteer
 
+import sys
+
 app = Flask(__name__)
 app.secret_key = "tarea2-development-key"
 BASE_DIR = Path(__file__).resolve().parent
@@ -23,15 +25,15 @@ def home():
 
 @app.route("/avistamientos")
 def avistamientos():
-    page_size = 6
-    try:
-        page = max(1, int(request.args.get("page", 1)))
-    except (TypeError, ValueError):
-        page = 1
+    return redirect(url_for("avistamientosPaged", page=1))
+
+@app.route("/avistamientos/<page>")
+def avistamientosPaged(page=1):
+    page_size = 10
 
     total = db.get_avistamiento_count()
     total_pages = max(1, (total + page_size - 1) // page_size)
-    page = min(page, total_pages)
+    page = min(int(page), total_pages)
     data = db.get_recent_avistamientos(page_size, (page - 1) * page_size)
     return render_template(
         "avistamientos.html",
@@ -147,3 +149,43 @@ def get_vol_comuna():
     data = db.get_stats_volcomuna()
     response = jsonify(data)
     return response
+
+@app.route("/post/<last_page>-<id>")
+def post(id, last_page):
+    avistamiento = db.get_avistamiento_id(id)
+    comments = db.get_post_comment(id)
+    return render_template("post.html", 
+                            id=id, avistamiento=avistamiento[0], 
+                            lastPg=last_page, 
+                            comments=comments,
+                            errMsg=request.args.get("errMsg", ""))
+
+@app.route("/post-comment/<idAvis>-<lastPg>", methods=["POST"])
+def post_comment(idAvis, lastPg):
+
+    name = request.form.get("comentario-name").strip()
+    text = request.form.get("comentario-text").strip()
+    errMsg = ""
+
+    validity = True
+
+    if len(name) < 3:
+        errMsg += "Nombre muy corto\n"
+        validity = False
+
+    if len(name) > 30:
+        errMsg += "Nombre muy largo\n"
+        validity = False
+
+    if len(text) < 5:
+        errMsg += "Comentario muy corto\n"
+        validity = False
+
+    if len(text) > 300:
+        errMsg = "Comentario muy largo"
+        validity = False
+
+    if(validity):
+        db.create_comment(idAvis, name, text)
+
+    return redirect(url_for("post", id=idAvis, last_page=lastPg, errMsg=errMsg))

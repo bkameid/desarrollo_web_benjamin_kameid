@@ -50,7 +50,7 @@ tr:nth-child(odd) {
 }
 
 td {
-    height: 300px;
+    height: 200px;
     width: 50%;
 }
 
@@ -133,4 +133,19 @@ footer img {
     align-items: center;
     padding-top: 20cqh;
     margin-left: auto;
+}
+
+.button {
+    margin-top:50%; 
+    width:130px; 
+    height:40px; 
+    background-color:rgb(146, 146, 255); 
+    margin-bottom:10px; 
+    border-radius: 10px; 
+    text-align:center; 
+    line-height:40px;
+    display: block;
+    
+    color: black;
+    text-decoration-color: transparent;
 }
