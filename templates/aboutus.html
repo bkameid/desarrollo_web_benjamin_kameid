@@ -28,7 +28,7 @@
 
         <div class="aboutus-container">
             <div style="width: 50%;"> <!-- Columna izq -->            
-                <article headingOffset="1">
+                <article>
                     <h1>Quienes somos</h1>
                     <p style="color:black; text-align: justify; padding-inline:50px;">
                         La Unión de Ornitólogos de Chile (UNORCH), conocida públicamente como AvesChile, es una organización sin fines de lucro, científica y conservacionista, fundada con el propósito de estudiar, valorar y proteger la rica diversidad de aves silvestres de Chile y sus ecosistemas.<br>
@@ -36,17 +36,17 @@
                     </p>
                 </article>
                 <br>
-                <article headingOffset="1">
+                <article>
                     <h1>Revista RCO</h1>
                     <p>La RCO publica artículos inéditos en cualquier área de la ornitología, especialmente en temáticas de biología, historia natural, ecología y conservación de aves neotropicales, con especial énfasis en las aves chilenas. Los manuscritos se aceptarán en el entendido de que no han sido publicados en otras revistas y de que todas las personas señaladas como autores han aprobado la versión recibida del manuscrito, lo que en último término es responsabilidad del autor principal. El idioma oficial de la RCO es el español, aunque los trabajos en inglés son igualmente bienvenidos. La RCO publica trabajos en tres tipos de formatos: Artículos (incluyendo revisiones y comentarios), Contribuciones Breves y Notas Cortas.
                     </p>
                 </article>
-                <article headingOffset="1">
+                <article>
                     <h1>Miembros</h1>
                     <p>
                         Hasta el momento, la organización cuenta con:
                     </p>
-                    <div headingOffset="1">
+                    <div>
                         <h1><span style="font-size:50px">{{cantidad}}</span> <span style="color: black; font-weight: normal; font-size:large;"> miembros</span></h1>
                     </div>
                 </article>
@@ -72,6 +72,14 @@
                 </div>
             </article>
         </div>
+        <div style="display: flex; justify-content: center; width: 100%; margin-top: 50px;">
+            <article style="width: 40%;">
+                <h1>Avistamientos por ave</h1>
+                <div class="chart-container">
+                    <div id="bar-chart" class="chart"></div>
+                </div>
+            </article>
+        </div>
 
     </main>
     <footer>
@@ -88,3 +96,5 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="{{url_for('static', filename='js/charts.js')}}"></script>
 {% endblock %}
+</body>
+</html>

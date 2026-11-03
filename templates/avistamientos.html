@@ -55,8 +55,8 @@
             {% else %}
             <tr><td>No hay avistamientos publicados.</td></tr>
             {% endfor %}
-            </table>
-            <nav class="pagination" aria-label="Paginación de avistamientos">
+        </table>
+        <nav class="pagination" aria-label="Paginación de avistamientos">
                 {% if page > 1 %}
                 <a href="{{ url_for('avistamientosPaged', page=page - 1) }}">Anterior</a>
                 {% else %}
@@ -68,7 +68,7 @@
                 {% else %}
                 <span class="disabled">Siguiente</span>
                 {% endif %}
-            </nav>
+        </nav>
     </main>
     <footer>
         <div class="credits">
@@ -80,3 +80,4 @@
         <img src="{{url_for('static', filename='media/proto_logo_base.png')}}" alt="logo propio"> 
     </footer>
 </body>
+</html>

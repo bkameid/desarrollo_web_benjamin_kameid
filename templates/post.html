@@ -102,7 +102,7 @@
             </div>
             <div class="container">
                 {% if avistamiento.ruta_archivo %}
-                    <img src="{{ url_for('static', filename=avistamiento.ruta_archivo) }}">
+                    <img src="{{ url_for('static', filename=avistamiento.ruta_archivo) }}" alt="{{ avistamiento.ave }}">
                 {% endif %}
             </div>
         </div>

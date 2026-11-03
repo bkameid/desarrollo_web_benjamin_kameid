@@ -34,7 +34,7 @@
 
     <h1>Últimos Avistamientos</h1>
     {% for avis in avistamientos %}
-    <h3>{{avis.ave}}</h3>
+    <h2>{{avis.ave}}</h2>
         <article> <!-- 注意注意 modificar ave del dia a last 2 report -->
             <div class="img-container-avis">
                 {% if avis.ruta_archivo %}
@@ -46,7 +46,7 @@
                 <p>{{ avis.lugar }}</p>
                 <p>{{ avis.fecha_hora.strftime('%d-%m-%Y') }}</p>
             </div>
-            </article>
+        </article>
     {% endfor %}
     </main>
     <div class="spacer"></div>

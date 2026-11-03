@@ -42,6 +42,18 @@ form {
     margin-right: 20px;
 }
 
+.gender-group {
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.gender-group legend {
+    padding: 0;
+}
+
 
 
 footer {

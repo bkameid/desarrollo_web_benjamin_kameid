@@ -156,6 +156,86 @@ async function cargarGraficoPie() {
     }
 }
 
+async function cargarGraficoBarras() {
+    try {
+        const respuesta = await fetch('http://127.0.0.1:5000/get-vol-comuna');
+
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datosJson = await respuesta.json();
+        const categories = [];
+        const series = [];
+
+        console.log(datosJson)
+
+        datosJson.forEach((registro) => {
+            categories.push(registro["nombre"]);
+            series.push(registro["cantidad"]);
+        }
+        );
+
+        console.log(categories)
+
+        Highcharts.chart('bar-chart', {
+        chart: {
+            type: 'column',
+            backgroundColor:'#fff'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: categories,
+            title: {
+                text: 'Mes',
+                style: {
+                    color: '#000'
+                }
+            },
+            lineColor: '#000',
+            tickColor: '#000',
+            labels: {
+                style: {
+                    color: '#000'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            lineColor: '#000',
+            tickColor: '#000',
+            title: {
+                text: 'Ventas',
+                style: {
+                    color:'#000' 
+                }
+            },
+            labels: {
+                style: {
+                    color: '#000'
+                }
+            }
+        },
+        legend: { enabled: false },
+        series: [{
+            name: 'Ventas',
+            data: series
+        }],
+        plotOptions: {
+            column: {
+                color: '#78d261',
+                borderColor: '#888',
+                borderWidth: 0
+            }
+        },
+        });
+    } catch (error) {
+        console.error('No se pudieron cargar los datos:', error);
+    }
+}
+
 async function cargarGraficoMapa() {
     try {
         const [respuestaMapa, respuestaDatos] = await Promise.all([
@@ -204,4 +284,5 @@ async function cargarGraficoMapa() {
 
 cargarGraficoLine();
 cargarGraficoPie();
+cargarGraficoBarras();
 cargarGraficoMapa();
