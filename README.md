@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-Actualmente, los CSS poseen 2 errores cada uno. Sin embargo, no encuentor como arreglar esos errores que W3C encuentra, porque alteran de forma altamente notable el resultado final.
-=======
-En este read me, me gustaría disculparme.
-Sé que el código es un desastre, y que está muy mal hecho.
-El backend fue hecho parcialmente con GPT-5.6 Luna, siendo revisado y testeado personalmente antes de su entrega.
-Esto puede explicar porqué hay impementaciones diferentes de los querys en db.py, y también si hay alguna función sin utilizar que se quedó perdida en algún momento.
+Lo bueno es que en comparación a la tarea 2, lográ bajar el uso de IA a solamente asistencia para crear los gráficos de highchart. También, se ha intentado corregir los errores de html presentes. Sine embargo, esto parece haber alterado de forma permanente el *label* del campo de género en el formulario de voluntariado. 
 
-Aún así, la mayoría de decisiones sobre la implementación, fueron basadas en la estructura del aux5.
->>>>>>> Tarea-2-alt
+Notar que, debido al tiempo restante, no alcanzo a implementar un chart deseado, aunque no obligatorio. Equivalente más o menos al gráfico de barra pero en mapa.
