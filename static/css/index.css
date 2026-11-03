@@ -77,7 +77,6 @@ footer {
 
     display: flex;
     flex-shrink: 0;
-    container-type:size;
 }
 
 footer img {
@@ -90,7 +89,7 @@ footer img {
 
 .credits {
     align-items: center;
-    padding-top: 20cqh;
+    padding-top: 24px;
     margin-left: auto;
 }
 
