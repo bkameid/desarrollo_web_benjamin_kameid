@@ -1,0 +1,3 @@
+Lo bueno es que en comparación a la tarea 2, lográ bajar el uso de IA a solamente asistencia para crear los gráficos de highchart. También, se ha intentado corregir los errores de html presentes. Sine embargo, esto parece haber alterado de forma permanente el *label* del campo de género en el formulario de voluntariado. 
+
+Notar que, debido al tiempo restante, no alcanzo a implementar un chart deseado, aunque no obligatorio. Equivalente más o menos al gráfico de barra pero en mapa.
